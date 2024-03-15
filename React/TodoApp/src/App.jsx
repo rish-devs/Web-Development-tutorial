@@ -1,7 +1,7 @@
 // import { useState } from 'react'
 import { useState } from 'react'
 import Navbar from './components/Navbar'
-const { v4: uuidv4 } = require('uuid');
+import { v4 as uuidv4 } from 'uuid';
 
 function App() {
   // const [count, setCount] = useState(0)
@@ -22,7 +22,13 @@ function App() {
     setTodo(e.target.value)
   }
   const handleCheckbox = (e) => {
-
+    let id = e.target.name;
+    let index = item.findIndex(item => {
+      return item.id === id;
+    })
+    let newTodos = todos;
+    newTodos[index].isCompleted = !newTodos[index].isCompleted;
+    setTodos(newTodos)
   }
 
   return (
@@ -37,8 +43,8 @@ function App() {
         <h2 className='text-xl font-bold'>Your Todos</h2>
         <div className="todos">
           {todos.map(item => {
-            return (<div className="todo flex justify-between w-1/4 p-1">
-              <input onChange={handleCheckbox} type="checkbox" value={todo.isCompleted} name="" id="" />
+            return (<div key={item.id} className="todo flex justify-between w-1/4 p-1">
+              <input onChange={handleCheckbox} type="checkbox" value={item.isCompleted} name="" id="" />
               <div className={item.isCompleted ? "line-through" : ""}>{item.todo}</div>
               <div className="buttons">
                 <button onClick={handleEdit} className='rounded-md bg-gray-600 text-sm font-bold text-white p-2 mx-1 hover:bg-blue-500 transition-all '>Edit</button>
