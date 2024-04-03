@@ -7,14 +7,9 @@ import './App.css'
 import { useState } from 'react';
 import NoTaskDueMsg from './components/NoTaskDueMsg';
 function App() {
-  const intialTodoItems = [];
-  const [todoItems, setTodoItems] = useState(intialTodoItems);
+  const [todoItems, setTodoItems] = useState([]);
   const handleNewItem = (itemName, itemDueDate) => {
-    const newItem = {
-      name: itemName,
-      dueDate: itemDueDate
-    }
-    setTodoItems([...todoItems, newItem])
+    setTodoItems((currValue) => [...currValue, { name: itemName, dueDate: itemDueDate }])
   }
   const handleDeleteItem = (itemName) => {
     console.log(`Item Deleted  ${itemName}`)
@@ -22,6 +17,7 @@ function App() {
     setTodoItems(updateItems)
 
   }
+  console.log("App refresh")
   return (
     <>
       <Navbar />
@@ -30,7 +26,7 @@ function App() {
         <div className="container w-100">
           <AddTodo handleNewItem={handleNewItem} />
           <CreateTodo todoItems={todoItems} handleDeleteItem={handleDeleteItem} />
-          {todoItems.length === 0 && <NoTaskDueMsg />}
+          <NoTaskDueMsg todoItems={todoItems} />
         </div>
       </center>
     </>

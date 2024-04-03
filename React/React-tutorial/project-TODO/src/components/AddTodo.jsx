@@ -1,33 +1,32 @@
-import { React, useState } from 'react'
-
+import { React, useRef } from 'react'
+import { MdAddTask } from "react-icons/md";
 const AddTodo = ({ handleNewItem }) => {
-  const [todoName, setTodoName] = useState("");
-  const [todoDueDate, setTodoDueDate] = useState("");
-
-  const handleTodoChange = (e) => {
-    setTodoName(e.target.value)
-  }
-  const handleDueDateChange = (e) => {
-    setTodoDueDate(e.target.value)
-  }
-  const handleAddButton = () => {
+  const todoNameElement = useRef();
+  const todoDueDateElement = useRef();
+  console.log("Add todo repainted");
+  const handleAddButton = (event) => {
+    event.preventDefault();
+    const todoName = todoNameElement.current.value;
+    const todoDueDate = todoDueDateElement.current.value;
     handleNewItem(todoName, todoDueDate)
-    setTodoName("")
-    setTodoDueDate("")
+    todoNameElement.current.value = "";
+    todoDueDateElement.current.value = "";
   }
   return (
     <div className='todo-container w-50'>
-      <div className="row kg-row">
+      <form onSubmit={handleAddButton} className="row kg-row">
         <div className="col-6">
-          <input value={todoName} className='w-100' type="text" name="todo" id="" placeholder="Enter a TODO Task" onChange={handleTodoChange} />
+          <input ref={todoNameElement} className='w-100' type="text" name="todo" id="" placeholder="Enter a TODO Task" />
         </div>
         <div className="col-4">
-          <input value={todoDueDate} type="date" name="" id="" onChange={handleDueDateChange} />
+          <input ref={todoDueDateElement} type="date" name="" id="" />
         </div>
         <div className="col-2">
-          <button onClick={handleAddButton} type="button" className="btn btn-success todo-button kg-button">ADD</button>
+          <button type='submit' className="btn btn-success todo-button kg-button">
+            <MdAddTask />
+          </button>
         </div>
-      </div>
+      </form>
     </div>
   )
 }

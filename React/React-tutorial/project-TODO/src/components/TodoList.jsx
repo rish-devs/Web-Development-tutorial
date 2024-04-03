@@ -1,6 +1,8 @@
 import React from 'react'
+import { MdDelete } from "react-icons/md";
 
 const TodoList = ({ todoTitle, todoDate, handleDeleteItem }) => {
+  console.log("TodoList repaint");
   return (
     <>
       <div className='py-3 w-50'>
@@ -12,7 +14,7 @@ const TodoList = ({ todoTitle, todoDate, handleDeleteItem }) => {
             {todoDate}
           </div>
           <div className="col-2">
-            <button onClick={() => handleDeleteItem(todoTitle)} type="button" className="btn btn-danger kg-button">Delete</button>
+            <button onClick={() => handleDeleteItem(todoTitle)} type="button" className="btn btn-danger kg-button"><MdDelete /></button>
           </div>
         </div>
       </div>
